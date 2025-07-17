@@ -4,7 +4,7 @@ import { LINKS } from "@/types/navigationTypes";
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    redirect: LINKS.DASHBOARD,
+    redirect: LINKS.TRANSACTIONS,
   },
   {
     path: LINKS.CATEGORIES,
