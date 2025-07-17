@@ -1,28 +1,33 @@
 import { RouteRecordRaw } from "vue-router";
+import { LINKS } from "@/types/navigationTypes";
 
 const routes: RouteRecordRaw[] = [
   {
-    path: "/categories",
+    path: "/",
+    redirect: LINKS.DASHBOARD,
+  },
+  {
+    path: LINKS.CATEGORIES,
     name: "CategoriesView",
     component: () => import("@/views/CategoriesView.vue"),
   },
   {
-    path: "/dashboard",
+    path: LINKS.DASHBOARD,
     name: "DashboardView",
     component: () => import("@/views/DashboardView.vue"),
   },
   {
-    path: "/goals",
+    path: LINKS.GOALS,
     name: "GoalsView",
     component: () => import("@/views/GoalsView.vue"),
   },
   {
-    path: "/reports",
+    path: LINKS.REPORTS,
     name: "ReportsView",
     component: () => import("@/views/ReportsView.vue"),
   },
   {
-    path: "/transactions",
+    path: LINKS.TRANSACTIONS,
     name: "TransactionsView",
     component: () => import("@/views/TransactionsView.vue"),
   },
