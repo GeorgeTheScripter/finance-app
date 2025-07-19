@@ -28,8 +28,6 @@
     </div>
 
     <div class="flex flex-col gap-3">
-      <h4 class="text-xl">Категории</h4>
-
       <div class="flex flex-wrap gap-1">
         <InputRadio
           v-for="category in filteredCategories"
@@ -77,6 +75,8 @@ watch(selectedType, () => {
   categorySelected.value = null;
 });
 
+const emit = defineEmits<{ (e: "close"): void }>();
+
 const addTransaction = () => {
   if (categorySelected.value === null || inputAmount.value === null) {
     alert("Заполните поля");
@@ -107,5 +107,6 @@ const addTransaction = () => {
   inputDescription.value = "";
   selectedType.value = CATEGORY_TYPE.INC;
   categorySelected.value = null;
+  emit("close");
 };
 </script>

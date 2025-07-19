@@ -1,6 +1,6 @@
 <template>
   <header
-    class="py-4 px-10 fixed bottom-0 bg-slate-300 w-full rounded-tl-2xl rounded-tr-2xl"
+    class="py-4 px-10 fixed z-2 bottom-0 bg-slate-300 w-full rounded-tl-2xl rounded-tr-2xl"
   >
     <nav class="flex justify-between">
       <RouterLink
