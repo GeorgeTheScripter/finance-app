@@ -17,16 +17,17 @@ export const useTransactionStore = defineStore("transaction", () => {
     { id: 2, title: "Находка", type: CATEGORY_TYPE.INC },
     { id: 3, title: "Кража", type: CATEGORY_TYPE.INC },
     { id: 4, title: "Подарок", type: CATEGORY_TYPE.INC },
+    { id: 5, title: "Спекуляции", type: CATEGORY_TYPE.INC },
 
-    { id: 5, title: "Коммунальные услуги", type: CATEGORY_TYPE.EXP },
-    { id: 6, title: "Такси", type: CATEGORY_TYPE.EXP },
-    { id: 7, title: "Продукты", type: CATEGORY_TYPE.EXP },
-    { id: 8, title: "Маркетплейс", type: CATEGORY_TYPE.EXP },
-    { id: 9, title: "Ресторан", type: CATEGORY_TYPE.EXP },
-    { id: 10, title: "Дом", type: CATEGORY_TYPE.EXP },
-    { id: 11, title: "Одежда", type: CATEGORY_TYPE.EXP },
-    { id: 12, title: "Наркотики", type: CATEGORY_TYPE.EXP },
-    { id: 13, title: "Аптека", type: CATEGORY_TYPE.EXP },
+    { id: 6, title: "Коммунальные услуги", type: CATEGORY_TYPE.EXP },
+    { id: 7, title: "Такси", type: CATEGORY_TYPE.EXP },
+    { id: 8, title: "Продукты", type: CATEGORY_TYPE.EXP },
+    { id: 9, title: "Маркетплейс", type: CATEGORY_TYPE.EXP },
+    { id: 10, title: "Ресторан", type: CATEGORY_TYPE.EXP },
+    { id: 11, title: "Дом", type: CATEGORY_TYPE.EXP },
+    { id: 12, title: "Одежда", type: CATEGORY_TYPE.EXP },
+    { id: 13, title: "Наркотики", type: CATEGORY_TYPE.EXP },
+    { id: 14, title: "Аптека", type: CATEGORY_TYPE.EXP },
   ]);
 
   const loadFromLocalStorage = () => {
@@ -51,7 +52,7 @@ export const useTransactionStore = defineStore("transaction", () => {
 
   const addTransaction = (newTrans: Transaction): void => {
     if (newTrans) {
-      transactions.value.push({ ...newTrans, id: +new Date() });
+      transactions.value.push(newTrans);
     }
 
     saveToLocalStorage();

@@ -9,6 +9,11 @@ export enum RADIO_COLORS {
   CATEGORY = "peer-checked:bg-blue-500",
 }
 
+export enum TRANSACTION_ITEM_COLORS {
+  INCOME = "bg-green-100",
+  EXPENSE = "bg-red-100",
+}
+
 export type Category = {
   id: number;
   title: string;
@@ -17,7 +22,8 @@ export type Category = {
 
 export type Transaction = {
   id: number;
-  amount: number;
+  type: CATEGORY_TYPE;
+  amount: number | null;
   date: Date;
   category: Category;
   description?: string;
