@@ -1,6 +1,6 @@
 <template>
   <input
-    class="py-2 px-4 bg-gray-300 rounded-xl outline-0"
+    class="py-4 px-4 bg-gray-300 rounded-xl outline-0"
     type="text"
     :value="modelValue"
     @input="handleInput($event)"

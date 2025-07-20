@@ -42,7 +42,11 @@
       </div>
     </div>
 
-    <Button @click="addTransaction">Добавить</Button>
+    <Button
+      @click="addTransaction"
+      class="bg-green-600 text-xl font-medium text-white py-3"
+      >Добавить</Button
+    >
   </form>
 </template>
 

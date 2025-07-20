@@ -1,22 +1,29 @@
 <template>
   <div :class="`p-4 rounded-xl ${itemColor} flex flex-col gap-3`">
     <div class="flex flex-col gap-2">
-      <p class="text-2xl font-medium">{{ transaction.amount }} ₽</p>
-      <p class="text-xs text-gray-500">{{ transaction.description }}</p>
+      <div class="flex justify-between">
+        <p class="text-2xl font-medium">{{ transaction.amount }} ₽</p>
+        <p class="text-sm text-gray-500">{{ date }}</p>
+      </div>
+
+      <p class="text-base text-gray-500">{{ transaction.description }}</p>
     </div>
 
     <div class="flex justify-between items-center">
-      <div :class="`px-4 py-2 bg-blue-500 text-white rounded-xl`">
+      <div class="px-4 py-2 bg-blue-500 text-white rounded-xl text-sm">
         {{ transaction.category.title }}
       </div>
-      <Button @click="transactions.methods.removeTransaction(transaction.id)"
-        >X</Button
+      <Button
+        class="px-4 py-2 bg-red-400 text-white text-sm"
+        @click="transactions.methods.removeTransaction(transaction.id)"
+        >Удалить</Button
       >
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { formatDate } from "@/utils/formatDate";
 import { useTransactionStore } from "@/store/useTransactionStore";
 import {
   CATEGORY_TYPE,
@@ -36,4 +43,6 @@ const itemColor = computed(() => {
 });
 
 const transactions = useTransactionStore();
+
+const date = formatDate(props.transaction.date);
 </script>
