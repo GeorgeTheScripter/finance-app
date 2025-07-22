@@ -15,6 +15,7 @@ export enum TRANSACTION_ITEM_COLORS {
 }
 
 export type Category = {
+  color: string;
   id: number;
   title: string;
   type: CATEGORY_TYPE;
@@ -31,4 +32,10 @@ export type Transaction = {
 
 export type RawTransaction = Omit<Transaction, "date"> & {
   date: string;
+};
+
+export type DataItem = {
+  category: string;
+  count: number | null;
+  color: string;
 };

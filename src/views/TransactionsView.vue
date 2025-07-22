@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="px-4 fixed w-full bg-white h-[50px] flex items-center">
+    <div class="px-4 fixed z-3 w-full bg-white h-[50px] flex items-center">
       <h3 class="text-3xl">Транзакции</h3>
     </div>
 
     <div
-      class="px-4 fixed top-[50px] w-full bg-white h-[40px] flex items-center justify-end gap-2"
+      class="px-4 fixed z-3 top-[50px] w-full bg-white h-[40px] flex items-center justify-end gap-2"
     >
       <Button class="bg-green-600 py-1 px-2" @click="store.methods.resetFilter"
         ><img :src="ResetIcon" class="w-[24px]" alt="reset"
@@ -23,7 +23,7 @@
           :key="dateGroup"
         >
           <h3
-            class="text-xl font-bold sticky top-[90px] bg-white z-10 h-[50px] flex items-center"
+            class="text-xl font-bold sticky top-[90px] bg-white z-2 h-[50px] flex items-center"
           >
             {{ dateGroup }}
           </h3>
@@ -39,7 +39,7 @@
       </div>
 
       <Button
-        class="fixed bottom-[100px] right-4 left-4 py-4 bg-green-600 text-xl font-medium text-white"
+        class="fixed z-3 bottom-[100px] right-4 left-4 py-4 bg-green-600 text-xl font-medium text-white"
         v-if="!modalForm.isVisible.value"
         @click="modalForm.open"
         >Добавить</Button

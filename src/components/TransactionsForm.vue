@@ -37,7 +37,7 @@
           :value="category.id"
           :checked="categorySelected === category.id"
           @change="categorySelected = +$event"
-          :colorClass="RADIO_COLORS.CATEGORY"
+          :colorClass="category.color"
         />
       </div>
     </div>

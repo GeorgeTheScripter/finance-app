@@ -10,7 +10,10 @@
     </div>
 
     <div class="flex justify-between items-center">
-      <div class="px-4 py-2 bg-green-600 text-white rounded-xl text-sm">
+      <div
+        :class="`px-4 py-2 rounded-xl text-sm`"
+        :style="{ backgroundColor: transaction.category.color }"
+      >
         {{ transaction.category.title }}
       </div>
       <Button
