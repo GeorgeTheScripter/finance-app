@@ -5,26 +5,26 @@
     </div>
 
     <div class="pt-[60px] pb-[120px] flex flex-col gap-2">
-      <!-- <DashboardTabloid
+      <DashboardTabloid
         :title="'Общий доход'"
         :color="'bg-green-100'"
         :sum="store.totalIncome"
         :data="store.chartIncome"
-      /> -->
+      />
 
-      <!-- <DashboardTabloid
+      <DashboardTabloid
         :title="'Общий расход'"
         :color="'bg-red-100'"
         :sum="store.totalExpense"
-        :data="data_expense"
-      /> -->
+        :data="store.chartExpense"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-// import DashboardTabloid from "@/components/DashboardTabloid.vue";
-// import { useDashboardStore } from "@/store/useDashboardStore";
+import DashboardTabloid from "@/components/DashboardTabloid.vue";
+import { useDashboardStore } from "@/store/useDashboardStore";
 
-// const store = useDashboardStore();
+const store = useDashboardStore();
 </script>

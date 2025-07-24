@@ -65,15 +65,8 @@
             <div
               v-for="category in store.categories"
               :key="category.id"
-              :class="{
-                'bg-green-600 text-white': store.selectedCategoriesIds.includes(
-                  category.id
-                ),
-                'bg-gray-300 text-black': !store.selectedCategoriesIds.includes(
-                  category.id
-                ),
-              }"
               class="px-4 py-2 rounded-xl"
+              :style="getCategoryStyle(category)"
               @click="store.methods.toggleCategory(category.id)"
             >
               {{ category.title }}
@@ -96,8 +89,19 @@ import TransactionFilterModal from "@/components/TransactionFilterModal.vue";
 
 import FilterIcon from "@/assets/micro-icons/filter.svg";
 import ResetIcon from "@/assets/micro-icons/reset.svg";
+import { computed } from "vue";
+import { Category } from "@/types/transactions";
 
 const store = useTransactionStore();
 const modalFilter = useModal();
 const modalForm = useModal();
+
+const getCategoryStyle = computed(() => (category: Category) => {
+  const isSelected = store.selectedCategoriesIds.includes(category.id);
+
+  return {
+    background: isSelected ? "green" : category.color,
+    color: isSelected ? "white" : "inherit",
+  };
+});
 </script>

@@ -19,32 +19,57 @@ export const useDashboardStore = defineStore("dashboard", () => {
       .reduce((sum, trans) => sum + Number(trans.amount ?? 0), 0);
   });
 
-  // Доделать
-  // const chartIncome = computed(() => {
-  //   const grouped: Record<string, DataItem> = {};
+  // Deepseek
+  const chartIncome = computed(() => {
+    const grouped: Record<string, DataItem> = {};
 
-  //   transStore.transactions.forEach((item) => {
-  //     if (item.category.type === CATEGORY_TYPE.INC) {
-  //       const catId = item.category.id;
+    transStore.transactions.forEach((item) => {
+      if (item.category?.type === CATEGORY_TYPE.INC) {
+        const catId = item.category.id;
 
-  //       if (!grouped[catId]) {
-  //         grouped[catId] = {
-  //           category: item.category.title,
-  //           color: item.category.color, // Используем цвет из категории
-  //           count: 0,
-  //         };
-  //       }
+        // Инициализируем группу, если ее нет
+        grouped[catId] = grouped[catId] ?? {
+          category: item.category.title,
+          color: item.category.color,
+          count: 0,
+        };
 
-  //       grouped[catId].count += item.amount;
-  //     }
-  //   });
+        // Безопасное сложение с обработкой null
+        const amount = item.amount ?? 0;
+        grouped[catId].count = (grouped[catId]?.count ?? 0) + amount;
+      }
+    });
 
-  //   return Object.values(grouped);
-  // });
+    return Object.values(grouped);
+  });
+
+  const chartExpense = computed(() => {
+    const grouped: Record<string, DataItem> = {};
+
+    transStore.transactions.forEach((item) => {
+      if (item.category?.type === CATEGORY_TYPE.EXP) {
+        const catId = item.category.id;
+
+        // Инициализируем группу, если ее нет
+        grouped[catId] = grouped[catId] ?? {
+          category: item.category.title,
+          color: item.category.color,
+          count: 0,
+        };
+
+        // Безопасное сложение с обработкой null
+        const amount = item.amount ?? 0;
+        grouped[catId].count = (grouped[catId]?.count ?? 0) + amount;
+      }
+    });
+
+    return Object.values(grouped);
+  });
 
   return {
     totalIncome,
     totalExpense,
-    // chartIncome,
+    chartIncome,
+    chartExpense,
   };
 });

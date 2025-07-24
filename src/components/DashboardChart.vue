@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { DataItem } from "@/types/transactions";
 import { Chart, ChartItem } from "chart.js/auto";
-import { onBeforeUnmount, onMounted, ref } from "vue";
+import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 
 const props = defineProps<{
   data: DataItem[];
@@ -16,7 +16,7 @@ const props = defineProps<{
 const refElement = ref<HTMLCanvasElement | null>(null);
 let chartInstance: Chart | null = null;
 
-onMounted(() => {
+const initChart = () => {
   if (!refElement.value) {
     return;
   }
@@ -59,7 +59,17 @@ onMounted(() => {
       },
     },
   });
-});
+};
+
+onMounted(initChart);
+
+watch(
+  () => props.data,
+  () => {
+    initChart();
+  },
+  { deep: true }
+);
 
 onBeforeUnmount(() => {
   if (chartInstance) {

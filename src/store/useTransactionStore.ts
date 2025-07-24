@@ -133,26 +133,47 @@ export const useTransactionStore = defineStore("transaction", () => {
     saveToLocalStorage();
   };
 
+  // Deepseek
   const groupedTransactions = computed(() => {
     const groups: Record<string, Transaction[]> = {};
 
     filteredTransactions.value.forEach((transaction) => {
       const groupKey = formatGroupDate(transaction.date);
-
-      if (!groups[groupKey]) {
-        groups[groupKey] = [];
-      }
-
+      groups[groupKey] = groups[groupKey] || [];
       groups[groupKey].push(transaction);
     });
 
-    return Object.fromEntries(
-      Object.entries(groups).sort(([keyA], [keyB]) => {
-        const order: any = { Сегодня: 0, Вчера: 1 };
-        return (order[keyA] ?? 2) - (order[keyB] ?? 2);
-      })
-    );
-  });
+    // Преобразуем группы в массив для сортировки
+    const groupsArray = Object.entries(groups);
+
+    // Сортируем группы по дате (новые сверху)
+    const sortedGroups = groupsArray.sort(([keyA, transA], [keyB, transB]) => {
+      // Специальные группы (Сегодня/Вчера)
+      const priority: Record<string, number> = {
+        Сегодня: 0,
+        Вчера: 1,
+      };
+
+      // Если оба ключа в приоритете - сортируем по приоритету
+      if (keyA in priority && keyB in priority) {
+        return priority[keyA] - priority[keyB];
+      }
+
+      // Если один из ключей в приоритете - он идет выше
+      if (keyA in priority) return -1;
+      if (keyB in priority) return 1;
+
+      // Для обычных дат: сравниваем по реальной дате первой транзакции
+      const dateA = transA[0].date;
+      const dateB = transB[0].date;
+
+      // Сортировка по убыванию (новые даты вверху)
+      return dateB.getTime() - dateA.getTime();
+    });
+
+    // Преобразуем обратно в объект с сохранением порядка
+    return Object.fromEntries(sortedGroups);
+  }); // Deepseek
 
   const toggleCategory = (categoryID: number) => {
     const index = selectedCategoriesIds.value.indexOf(categoryID);
