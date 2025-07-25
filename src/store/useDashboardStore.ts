@@ -45,7 +45,7 @@ export const useDashboardStore = defineStore("dashboard", () => {
             color: category.color,
           };
         }
-        expenseMap[key].count! += transaction.amount;
+        expenseMap[key].count += transaction.amount;
       }
     });
 

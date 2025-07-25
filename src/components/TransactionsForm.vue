@@ -7,7 +7,6 @@
         :value="CATEGORY_TYPE.INC"
         :checked="selectedType === CATEGORY_TYPE.INC"
         @change="selectedType = $event as CATEGORY_TYPE"
-        :colorClass="RADIO_COLORS.INCOME"
       />
       <InputRadio
         title="Расход"
@@ -15,7 +14,6 @@
         :value="CATEGORY_TYPE.EXP"
         :checked="selectedType === CATEGORY_TYPE.EXP"
         @change="selectedType = $event as CATEGORY_TYPE"
-        :colorClass="RADIO_COLORS.EXPENSE"
       />
     </div>
 
@@ -37,7 +35,7 @@
           :value="category.id"
           :checked="categorySelected === category.id"
           @change="categorySelected = +$event"
-          :colorClass="category.color"
+          :color="category.color"
         />
       </div>
     </div>
@@ -51,8 +49,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, computed } from "vue";
-import { CATEGORY_TYPE, RADIO_COLORS, Transaction } from "@/types/transactions";
+import { ref, watch, computed, Ref } from "vue";
+import { CATEGORY_TYPE, Transaction } from "@/types/transactions";
 import { useTransactionStore } from "@/store/useTransactionStore";
 
 import Button from "@/components/UI/elements/Button.vue";
@@ -61,7 +59,7 @@ import InputRadio from "@/components/UI/elements/InputRadio.vue";
 
 const transactions = useTransactionStore();
 
-const inputAmount = ref<number | null>(null);
+const inputAmount: Ref<number | null> = ref(null);
 
 const inputDescription = ref<string>("");
 
@@ -99,7 +97,7 @@ const addTransaction = () => {
   const newTransaction: Transaction = {
     id: +new Date(),
     type: selectedType.value,
-    amount: inputAmount.value,
+    amount: Number(inputAmount.value),
     date: new Date(),
     category: category,
     description: inputDescription.value,
@@ -107,7 +105,7 @@ const addTransaction = () => {
 
   transactions.methods.addTransaction(newTransaction);
 
-  inputAmount.value = null;
+  inputAmount.value = 0;
   inputDescription.value = "";
   selectedType.value = CATEGORY_TYPE.INC;
   categorySelected.value = null;
