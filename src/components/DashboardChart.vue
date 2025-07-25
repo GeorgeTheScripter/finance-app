@@ -13,6 +13,8 @@ const props = defineProps<{
   data: DataItem[];
 }>();
 
+console.log(props.data);
+
 const refElement = ref<HTMLCanvasElement | null>(null);
 let chartInstance: Chart | null = null;
 

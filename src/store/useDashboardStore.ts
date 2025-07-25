@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { computed } from "vue";
 
 import { useTransactionStore } from "./useTransactionStore";
-import { CATEGORY_TYPE, DataItem } from "@/types/transactions";
+import { CATEGORY_TYPE, DataItem, Transaction } from "@/types/transactions";
 
 export const useDashboardStore = defineStore("dashboard", () => {
   const transStore = useTransactionStore();
@@ -19,57 +19,48 @@ export const useDashboardStore = defineStore("dashboard", () => {
       .reduce((sum, trans) => sum + Number(trans.amount ?? 0), 0);
   });
 
-  // Deepseek
-  const chartIncome = computed(() => {
-    const grouped: Record<string, DataItem> = {};
+  const chartInfo = computed(() => {
+    const transactions: Transaction[] = transStore.transactions;
+    const incomeMap: Record<string, DataItem> = {};
+    const expenseMap: Record<string, DataItem> = {};
 
-    transStore.transactions.forEach((item) => {
-      if (item.category?.type === CATEGORY_TYPE.INC) {
-        const catId = item.category.id;
+    transactions.forEach((transaction) => {
+      const category = transaction.category;
+      const key = `${category.id}`; // Уникальный ключ (id категории)
 
-        // Инициализируем группу, если ее нет
-        grouped[catId] = grouped[catId] ?? {
-          category: item.category.title,
-          color: item.category.color,
-          count: 0,
-        };
-
-        // Безопасное сложение с обработкой null
-        const amount = item.amount ?? 0;
-        grouped[catId].count = (grouped[catId]?.count ?? 0) + amount;
+      if (transaction.type === CATEGORY_TYPE.INC) {
+        if (!incomeMap[key]) {
+          incomeMap[key] = {
+            category: category.title,
+            count: 0,
+            color: category.color,
+          };
+        }
+        incomeMap[key].count! += transaction.amount;
+      } else if (transaction.type === CATEGORY_TYPE.EXP) {
+        if (!expenseMap[key]) {
+          expenseMap[key] = {
+            category: category.title,
+            count: 0,
+            color: category.color,
+          };
+        }
+        expenseMap[key].count! += transaction.amount;
       }
     });
 
-    return Object.values(grouped);
-  });
+    const income: DataItem[] = Object.values(incomeMap);
+    const expense: DataItem[] = Object.values(expenseMap);
 
-  const chartExpense = computed(() => {
-    const grouped: Record<string, DataItem> = {};
-
-    transStore.transactions.forEach((item) => {
-      if (item.category?.type === CATEGORY_TYPE.EXP) {
-        const catId = item.category.id;
-
-        // Инициализируем группу, если ее нет
-        grouped[catId] = grouped[catId] ?? {
-          category: item.category.title,
-          color: item.category.color,
-          count: 0,
-        };
-
-        // Безопасное сложение с обработкой null
-        const amount = item.amount ?? 0;
-        grouped[catId].count = (grouped[catId]?.count ?? 0) + amount;
-      }
-    });
-
-    return Object.values(grouped);
+    return {
+      income,
+      expense,
+    };
   });
 
   return {
     totalIncome,
     totalExpense,
-    chartIncome,
-    chartExpense,
+    chartInfo,
   };
 });

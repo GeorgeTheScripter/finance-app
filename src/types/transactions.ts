@@ -24,7 +24,7 @@ export type Category = {
 export type Transaction = {
   id: number;
   type: CATEGORY_TYPE;
-  amount: number | null;
+  amount: number;
   date: Date;
   category: Category;
   description?: string;
@@ -36,6 +36,6 @@ export type RawTransaction = Omit<Transaction, "date"> & {
 
 export type DataItem = {
   category: string;
-  count: number | null;
+  count: number;
   color: string;
 };

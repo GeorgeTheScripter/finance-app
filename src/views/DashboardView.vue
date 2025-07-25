@@ -9,14 +9,14 @@
         :title="'Общий доход'"
         :color="'bg-green-100'"
         :sum="store.totalIncome"
-        :data="store.chartIncome"
+        :data="store.chartInfo.income"
       />
 
       <DashboardTabloid
         :title="'Общий расход'"
         :color="'bg-red-100'"
         :sum="store.totalExpense"
-        :data="store.chartExpense"
+        :data="store.chartInfo.expense"
       />
     </div>
   </div>
