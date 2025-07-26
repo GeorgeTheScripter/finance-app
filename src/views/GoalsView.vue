@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import { useModal } from "@/composables/useModal";
-import { useGoals } from "@/store/useGoalsStore";
+import { useGoalsStore } from "@/store/useGoalsStore";
 import ModalWrapper from "@/components/ModalWrapper.vue";
 import GoalForm from "@/components/GoalForm.vue";
 import GoalAddSumForm from "@/components/GoalAddSumForm.vue";
@@ -48,7 +48,7 @@ import GoalItem from "@/components/GoalItem.vue";
 import { Goal } from "@/types/transactions";
 import { ref } from "vue";
 
-const store = useGoals();
+const store = useGoalsStore();
 const goalForm = useModal();
 const addSumForm = useModal();
 const selectedGoal = ref<Goal | null>(null);

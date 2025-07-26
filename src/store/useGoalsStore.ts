@@ -2,7 +2,7 @@ import { Goal } from "@/types/transactions";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-export const useGoals = defineStore("goals", () => {
+export const useGoalsStore = defineStore("goals", () => {
   const LOCAL_STORAGE_KEY = "goals";
   const goals = ref<Goal[]>([]);
   const acceptedGoals = ref<Goal[]>([]);

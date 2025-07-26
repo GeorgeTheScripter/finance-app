@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { useGoals } from "@/store/useGoalsStore";
+import { useGoalsStore } from "@/store/useGoalsStore";
 import { Goal } from "@/types/transactions";
 import { ref } from "vue";
 
@@ -31,7 +31,7 @@ const startSum = ref<number | null>();
 const destinationSum = ref<number | null>();
 const inputTitle = ref<string>("");
 const inputDescription = ref<string>("");
-const store = useGoals();
+const store = useGoalsStore();
 
 const emit = defineEmits<{ (e: "close"): void }>();
 
