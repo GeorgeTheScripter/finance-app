@@ -1,6 +1,7 @@
 <template>
   <div
     :class="`text-black rounded-xl ${color} py-4 px-4 flex flex-col gap-10 items-center h-fit w-full`"
+    @click="openModal"
   >
     <div class="flex flex-col items-center">
       <p class="text-xl">{{ title }}</p>
@@ -13,11 +14,17 @@
 
 <script setup lang="ts">
 import { DataItem } from "@/types/transactions";
-import DashboardChart from "./DashboardChart.vue";
-defineProps<{
+
+const props = defineProps<{
   color: string;
   title: string;
   sum: number;
   data: DataItem[];
 }>();
+
+const emit = defineEmits<{ (e: "openModal", data: DataItem[]): void }>();
+
+const openModal = () => {
+  emit("openModal", props.data);
+};
 </script>
