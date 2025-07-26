@@ -53,8 +53,6 @@ import { ref, watch, computed, Ref } from "vue";
 import { CATEGORY_TYPE, Transaction } from "@/types/transactions";
 import { useTransactionStore } from "@/store/useTransactionStore";
 
-import Button from "@/components/UI/elements/Button.vue";
-import Input from "@/components/UI/elements/Input.vue";
 import InputRadio from "@/components/UI/elements/InputRadio.vue";
 
 const transactions = useTransactionStore();

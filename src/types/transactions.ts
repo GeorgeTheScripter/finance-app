@@ -39,3 +39,11 @@ export type DataItem = {
   count: number;
   color: string;
 };
+
+export type Goal = {
+  id: number;
+  title: string;
+  currentSum: number;
+  destinationSum: number;
+  description?: string;
+};

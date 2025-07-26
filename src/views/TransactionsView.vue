@@ -46,12 +46,12 @@
       >
     </div>
 
-    <TransactionModal
+    <ModalWrapper
       :isVisible="modalForm.isVisible.value"
       @close="modalForm.close"
     >
       <TransactionsForm @close="modalForm.close" />
-    </TransactionModal>
+    </ModalWrapper>
 
     <TransactionFilterModal
       :isVisible="modalFilter.isVisible.value"
@@ -84,7 +84,7 @@ import { useModal } from "@/composables/useModal";
 
 import TransactionsForm from "@/components/TransactionsForm.vue";
 import TransactionItem from "@/components/TransactionItem.vue";
-import TransactionModal from "@/components/TransactionModal.vue";
+import ModalWrapper from "@/components/ModalWrapper.vue";
 import TransactionFilterModal from "@/components/TransactionFilterModal.vue";
 
 import FilterIcon from "@/assets/micro-icons/filter.svg";
