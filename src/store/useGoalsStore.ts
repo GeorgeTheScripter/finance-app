@@ -37,6 +37,14 @@ export const useGoals = defineStore("goals", () => {
     saveToLocalStorage();
   };
 
+  const addToGoal = (goalId: number, amount: number) => {
+    const goal = goals.value.find((g) => g.id === goalId);
+    if (goal) {
+      goal.currentSum = Number(goal.currentSum) + Number(amount);
+      saveToLocalStorage();
+    }
+  };
+
   const removeGoal = (id: number) => {
     goals.value.filter((goal: Goal) => goal.id !== id);
     saveToLocalStorage();
@@ -47,5 +55,6 @@ export const useGoals = defineStore("goals", () => {
     acceptedGoals,
     addGoal,
     removeGoal,
+    addToGoal,
   };
 });
