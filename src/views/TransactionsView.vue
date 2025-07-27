@@ -63,7 +63,7 @@
 
           <div class="flex flex-wrap gap-1">
             <div
-              v-for="category in store.categories"
+              v-for="category in categoriesStore.categories"
               :key="category.id"
               class="px-4 py-2 rounded-xl"
               :style="getCategoryStyle(category)"
@@ -91,8 +91,10 @@ import FilterIcon from "@/assets/micro-icons/filter.svg";
 import ResetIcon from "@/assets/micro-icons/reset.svg";
 import { computed } from "vue";
 import { Category } from "@/types/transactions";
+import { useCategoriesStore } from "@/store/useCategoriesStore";
 
 const store = useTransactionStore();
+const categoriesStore = useCategoriesStore();
 const modalFilter = useModal();
 const modalForm = useModal();
 

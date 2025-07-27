@@ -54,8 +54,10 @@ import { CATEGORY_TYPE, Transaction } from "@/types/transactions";
 import { useTransactionStore } from "@/store/useTransactionStore";
 
 import InputRadio from "@/components/UI/elements/InputRadio.vue";
+import { useCategoriesStore } from "@/store/useCategoriesStore";
 
 const transactions = useTransactionStore();
+const categoriesStore = useCategoriesStore();
 
 const inputAmount: Ref<number | null> = ref(null);
 
@@ -66,7 +68,7 @@ const selectedType = ref<CATEGORY_TYPE>(CATEGORY_TYPE.INC);
 const categorySelected = ref<number | null>(null);
 
 const filteredCategories = computed(() => {
-  return transactions.categories.filter(
+  return categoriesStore.categories.filter(
     (category) => category.type === selectedType.value
   );
 });
@@ -83,7 +85,7 @@ const addTransaction = () => {
     return;
   }
 
-  const category = transactions.categories.find(
+  const category = categoriesStore.categories.find(
     (cat) => cat.id === categorySelected.value
   );
 
