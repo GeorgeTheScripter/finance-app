@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export const useCategoriesStore = defineStore("categories", () => {
+  const LOCAL_STORAGE_KEY = "categories";
   const categories = ref<Category[]>([
     {
       id: 1,
@@ -51,17 +52,61 @@ export const useCategoriesStore = defineStore("categories", () => {
     { id: 14, title: "Аптека", type: CATEGORY_TYPE.EXP, color: "#48D1CC" },
   ]);
 
+  const saveToLocalStorage = () => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(categories.value));
+  };
+
+  const loadFromLocalStorage = () => {
+    const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+
+    if (savedData) {
+      const parseData = JSON.parse(savedData);
+      categories.value = parseData.map((category: Category) => ({
+        ...category,
+        id: Number(category.id),
+      }));
+    } else {
+      saveToLocalStorage();
+    }
+  };
+
+  loadFromLocalStorage();
+
   const addCategory = (newCategory: Omit<Category, "id">) => {
-    const id: number = categories.value.length + 1;
-    console.log(id);
+    const maxId = categories.value.reduce(
+      (max, cat) => (cat.id > max ? cat.id : max),
+      0
+    );
+
     categories.value.push({
       ...newCategory,
-      id: id,
+      id: maxId + 1,
     });
+
+    saveToLocalStorage();
+  };
+
+  const removeCategory = (id: number) => {
+    const index = categories.value.findIndex((c) => c.id === id);
+
+    if (index !== -1) {
+      categories.value.splice(index, 1);
+      saveToLocalStorage();
+    }
+  };
+
+  const changeCategory = (categoryId: number, changes: Partial<Category>) => {
+    const category = categories.value.find((cat) => cat.id === categoryId);
+    if (category) {
+      Object.assign(category, changes);
+      saveToLocalStorage();
+    }
   };
 
   return {
     categories,
     addCategory,
+    removeCategory,
+    changeCategory,
   };
 });

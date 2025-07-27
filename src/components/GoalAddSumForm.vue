@@ -34,11 +34,7 @@ const amount = ref<number | null>(null);
 const submit = () => {
   if (amount.value !== null && amount.value > 0) {
     emit("submit", props.goal.id, +amount.value);
-    close();
+    emit("close");
   }
-};
-
-const close = () => {
-  emit("close");
 };
 </script>

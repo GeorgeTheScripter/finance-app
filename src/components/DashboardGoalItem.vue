@@ -1,7 +1,5 @@
 <template>
-  <div
-    :class="`p-4 bg-gray-200 rounded-xl flex flex-col gap-5 ${completeColor}`"
-  >
+  <div :class="`p-4  rounded-xl flex flex-col gap-5 ${completeColor}`">
     <ProgressBar :progressPercentage="progressPercentage" />
 
     <div class="flex flex-col gap-4">
@@ -33,8 +31,8 @@ const progressPercentage = computed(() => {
 });
 
 const completeColor = computed(() => {
-  if (props.goal.currentSum >= props.goal.destinationSum) {
-    return "bg-green-200";
-  }
+  return props.goal.currentSum >= props.goal.destinationSum
+    ? "bg-green-200"
+    : "bg-gray-100";
 });
 </script>

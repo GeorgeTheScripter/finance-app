@@ -1,11 +1,6 @@
 import { defineStore } from "pinia";
 import { computed, ref, Ref, ComputedRef } from "vue";
-import {
-  Transaction,
-  Category,
-  RawTransaction,
-  CATEGORY_TYPE,
-} from "@/types/transactions";
+import { Transaction, RawTransaction } from "@/types/transactions";
 import { formatGroupDate } from "@/utils/formatDate";
 
 export const useTransactionStore = defineStore("transaction", () => {
