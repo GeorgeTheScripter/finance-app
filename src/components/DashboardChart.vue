@@ -33,10 +33,11 @@ const initChart = () => {
       labels: props.data.map((row) => row.category),
       datasets: [
         {
-          label: "Acquisitions by year",
           data: props.data.map((row) => row.count),
           backgroundColor: props.data.map((row) => row.color),
-          borderWidth: 1,
+          // borderWidth: 10,
+          offset: 20,
+          borderRadius: 10,
         },
       ],
     },

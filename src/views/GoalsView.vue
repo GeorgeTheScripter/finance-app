@@ -46,12 +46,15 @@ import GoalForm from "@/components/GoalForm.vue";
 import GoalAddSumForm from "@/components/GoalAddSumForm.vue";
 import GoalItem from "@/components/GoalItem.vue";
 import { Goal } from "@/types/transactions";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 const store = useGoalsStore();
 const goalForm = useModal();
 const addSumForm = useModal();
 const selectedGoal = ref<Goal | null>(null);
+const router = useRouter();
+const route = useRoute();
 
 const openAddSumModal = (goal: Goal) => {
   selectedGoal.value = goal;
@@ -61,4 +64,11 @@ const openAddSumModal = (goal: Goal) => {
 const handleAddSumSubmit = (goalId: number, amount: number) => {
   store.addToGoal(goalId, amount);
 };
+
+onMounted(() => {
+  if (route.query.showModal === "true") {
+    goalForm.open();
+    router.replace({ query: {} });
+  }
+});
 </script>

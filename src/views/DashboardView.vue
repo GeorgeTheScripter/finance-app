@@ -22,42 +22,8 @@
       />
     </div>
 
-    <div>
-      <div class="px-4 flex justify-between items-center text-xl font-bold">
-        <h3 class="sticky top-[90px] bg-white z-2 h-[50px] flex items-center">
-          Цели
-        </h3>
-
-        <p>{{ goalsStore.goals.length }}</p>
-      </div>
-
-      <div class="py-2 overflow-x-scroll">
-        <div class="flex gap-2 w-fit px-4">
-          <DashboardGoalItem
-            v-for="goal in goalsStore.goals"
-            :key="goal.id"
-            :goal="goal"
-            class="w-[180px]"
-          />
-        </div>
-      </div>
-    </div>
-
-    <div class="px-4 pb-[120px]">
-      <div class="flex justify-between items-center text-xl font-bold">
-        <h3 class="sticky top-[90px] bg-white z-2 h-[50px] flex items-center">
-          История
-        </h3>
-      </div>
-
-      <div class="flex flex-col gap-2">
-        <DashboardStoryItem
-          v-for="transaction in store.currentMonthTransactions"
-          :key="transaction.id"
-          :transaction="transaction"
-        />
-      </div>
-    </div>
+    <DashboardGoalsList />
+    <DashboardStoryList />
 
     <ModalWrapper :isVisible="modal.isVisible.value" @close="modal.close">
       <DashboardChart v-if="selectedData" class="w-full" :data="selectedData" />
@@ -66,20 +32,18 @@
 </template>
 
 <script setup lang="ts">
-import DashboardGoalItem from "@/components/DashboardGoalItem.vue";
 import DashboardTabloid from "@/components/DashboardTabloid.vue";
 import DashboardChart from "@/components/DashboardChart.vue";
 import ModalWrapper from "@/components/ModalWrapper.vue";
 import { useModal } from "@/composables/useModal";
 import { useDashboardStore } from "@/store/useDashboardStore";
-import { useGoalsStore } from "@/store/useGoalsStore";
 import { DataItem } from "@/types/transactions";
 import { ref } from "vue";
-import DashboardStoryItem from "@/components/DashboardStoryItem.vue";
+import DashboardGoalsList from "@/components/DashboardGoalsList.vue";
+import DashboardStoryList from "@/components/DashboardStoryList.vue";
 
 const store = useDashboardStore();
 const modal = useModal();
-const goalsStore = useGoalsStore();
 const selectedData = ref<DataItem[] | null>(null);
 
 const openChartModel = (data: DataItem[]) => {
