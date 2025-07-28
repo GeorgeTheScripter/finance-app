@@ -37,8 +37,22 @@ export const useGoalsStore = defineStore("goals", () => {
     saveToLocalStorage();
   };
 
+  const editGoal = (
+    goalId: number,
+    destinationSum: number,
+    title: string,
+    description: string
+  ) => {
+    const goal = goals.value.find((g: Goal) => g.id === goalId);
+    if (goal) {
+      goal.destinationSum = destinationSum;
+      goal.title = title;
+      goal.description = description;
+    }
+  };
+
   const addToGoal = (goalId: number, amount: number) => {
-    const goal = goals.value.find((g) => g.id === goalId);
+    const goal = goals.value.find((g: Goal) => g.id === goalId);
     if (goal) {
       goal.currentSum = Number(goal.currentSum) + Number(amount);
       saveToLocalStorage();
@@ -56,5 +70,6 @@ export const useGoalsStore = defineStore("goals", () => {
     addGoal,
     removeGoal,
     addToGoal,
+    editGoal,
   };
 });

@@ -4,9 +4,15 @@
 
     <div class="flex flex-col gap-4">
       <div class="flex flex-col gap-3">
-        <p class="text-3xl font-medium">
-          {{ goal.currentSum }} / {{ goal.destinationSum }} ₽
-        </p>
+        <div class="flex justify-between">
+          <p class="text-3xl font-medium">
+            {{ goal.currentSum }} / {{ goal.destinationSum }} ₽
+          </p>
+
+          <Button @click="editGoal" class="bg-green-600 py-1 px-2 w-fit"
+            ><img class="w-[24px]" :src="SettingsIcon" alt="settings"
+          /></Button>
+        </div>
 
         <div class="flex flex-col gap-2">
           <p class="text-xl font-medium text-gray-500">{{ goal.title }}</p>
@@ -28,15 +34,23 @@
 import { Goal } from "@/types/transactions";
 import ProgressBar from "./UI/elements/ProgressBar.vue";
 import { computed } from "vue";
+import SettingsIcon from "@/assets/micro-icons/settings.svg";
 
 const props = defineProps<{
   goal: Goal;
 }>();
 
-const emit = defineEmits<{ (e: "openAddSumForm", goal: Goal): void }>();
+const emit = defineEmits<{
+  (e: "add", goal: Goal): void;
+  (e: "edit", goal: Goal): void;
+}>();
 
 const addSum = () => {
-  emit("openAddSumForm", props.goal);
+  emit("add", props.goal);
+};
+
+const editGoal = () => {
+  emit("edit", props.goal);
 };
 
 const progressPercentage = computed(() => {

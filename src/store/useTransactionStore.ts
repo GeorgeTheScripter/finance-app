@@ -1,13 +1,13 @@
 import { defineStore } from "pinia";
-import { computed, ref, Ref, ComputedRef } from "vue";
+import { computed, ref } from "vue";
 import { Transaction, RawTransaction } from "@/types/transactions";
 import { formatGroupDate } from "@/utils/formatDate";
 
 export const useTransactionStore = defineStore("transaction", () => {
   const LOCAL_STORAGE_KEY = "transactions";
 
-  const transactions: Ref<Transaction[]> = ref([]);
-  const selectedCategoriesIds: Ref<number[]> = ref([]);
+  const transactions = ref<Transaction[]>([]);
+  const selectedCategoriesIds = ref<number[]>([]);
 
   const loadFromLocalStorage = () => {
     const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -30,12 +30,12 @@ export const useTransactionStore = defineStore("transaction", () => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(transactions.value));
   };
 
-  const filteredTransactions: ComputedRef<Transaction[]> = computed(() => {
+  const filteredTransactions = computed<Transaction[]>(() => {
     if (selectedCategoriesIds.value.length === 0) {
       return transactions.value;
     }
 
-    return transactions.value.filter((transaction) => {
+    return transactions.value.filter((transaction: Transaction): boolean => {
       return selectedCategoriesIds.value.includes(transaction.category.id);
     });
   });
@@ -62,8 +62,8 @@ export const useTransactionStore = defineStore("transaction", () => {
       return;
     }
 
-    const index = transactions.value.findIndex(
-      (trans) => trans.id === editedTrans.id
+    const index: number = transactions.value.findIndex(
+      (trans: Transaction): boolean => trans.id === editedTrans.id
     );
 
     if (index === -1) {
@@ -123,7 +123,7 @@ export const useTransactionStore = defineStore("transaction", () => {
   }); // Deepseek
 
   const toggleCategory = (categoryID: number) => {
-    const index = selectedCategoriesIds.value.indexOf(categoryID);
+    const index: number = selectedCategoriesIds.value.indexOf(categoryID);
 
     if (index >= 0) {
       selectedCategoriesIds.value.splice(index, 1);

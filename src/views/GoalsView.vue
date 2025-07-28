@@ -9,7 +9,8 @@
         v-for="goal in store.goals"
         :key="goal.id"
         :goal="goal"
-        @openAddSumForm="openAddSumModal"
+        @add="openAddSumModal"
+        @edit="openEditGoalModal"
       />
     </div>
 
@@ -35,23 +36,38 @@
         @close="addSumForm.close"
       />
     </ModalWrapper>
+
+    <ModalWrapper
+      :isVisible="editModal.isVisible.value"
+      @close="editModal.close"
+    >
+      <GoalEditForm
+        v-if="selectedGoal"
+        :goal="selectedGoal"
+        @submit="handleEditGoal"
+        @close="editModal.close"
+      />
+    </ModalWrapper>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useModal } from "@/composables/useModal";
 import { useGoalsStore } from "@/store/useGoalsStore";
-import ModalWrapper from "@/components/ModalWrapper.vue";
-import GoalForm from "@/components/GoalForm.vue";
-import GoalAddSumForm from "@/components/GoalAddSumForm.vue";
-import GoalItem from "@/components/GoalItem.vue";
 import { Goal } from "@/types/transactions";
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
+import ModalWrapper from "@/components/ModalWrapper.vue";
+import GoalForm from "@/components/GoalForm.vue";
+import GoalAddSumForm from "@/components/GoalAddSumForm.vue";
+import GoalItem from "@/components/GoalItem.vue";
+import GoalEditForm from "@/components/GoalEditForm.vue";
+
 const store = useGoalsStore();
 const goalForm = useModal();
 const addSumForm = useModal();
+const editModal = useModal();
 const selectedGoal = ref<Goal | null>(null);
 const router = useRouter();
 const route = useRoute();
@@ -61,8 +77,22 @@ const openAddSumModal = (goal: Goal) => {
   addSumForm.open();
 };
 
+const openEditGoalModal = (goal: Goal) => {
+  selectedGoal.value = goal;
+  editModal.open();
+};
+
 const handleAddSumSubmit = (goalId: number, amount: number) => {
   store.addToGoal(goalId, amount);
+};
+
+const handleEditGoal = (
+  goalId: number,
+  destinationSum: number,
+  title: string,
+  description: string
+) => {
+  store.editGoal(goalId, destinationSum, title, description);
 };
 
 onMounted(() => {

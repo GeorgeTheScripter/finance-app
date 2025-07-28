@@ -5,7 +5,7 @@
     <div class="flex flex-col gap-4">
       <div class="flex flex-col gap-3">
         <div class="flex flex-col gap-2">
-          <p class="text-xl font-medium text-gray-500">{{ goal.title }}</p>
+          <p class="text-l font-medium text-gray-500">{{ goal.title }}</p>
         </div>
         <p class="text-s font-medium">
           {{ goal.currentSum }} / {{ goal.destinationSum }} ₽
