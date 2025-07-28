@@ -48,6 +48,7 @@ export const useGoalsStore = defineStore("goals", () => {
       goal.destinationSum = destinationSum;
       goal.title = title;
       goal.description = description;
+      saveToLocalStorage();
     }
   };
 

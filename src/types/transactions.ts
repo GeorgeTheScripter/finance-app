@@ -40,6 +40,11 @@ export type DataItem = {
   color: string;
 };
 
+export type DailyDataItem = {
+  day: number;
+  amount: number;
+};
+
 export type Goal = {
   id: number;
   title: string;
