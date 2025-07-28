@@ -1,10 +1,10 @@
 <template>
-  <div class="px-4">
-    <div class="fixed w-full bg-white h-[50px] flex items-center">
-      <h3 class="text-3xl">Статистика</h3>
+  <div class="">
+    <div class="px-4 fixed w-full bg-white h-[50px] flex items-center">
+      <h3 class="text-3xl">Статистика за {{ store.currentMonthText }}</h3>
     </div>
 
-    <div class="pt-[60px] flex gap-2 w-full">
+    <div class="px-4 pt-[60px] flex gap-2 w-full">
       <DashboardTabloid
         :title="'Общий доход'"
         :color="'bg-green-100'"
@@ -23,7 +23,7 @@
     </div>
 
     <div>
-      <div class="flex justify-between items-center text-xl font-bold">
+      <div class="px-4 flex justify-between items-center text-xl font-bold">
         <h3 class="sticky top-[90px] bg-white z-2 h-[50px] flex items-center">
           Цели
         </h3>
@@ -32,7 +32,7 @@
       </div>
 
       <div class="py-2 overflow-x-scroll">
-        <div class="flex gap-2 w-fit">
+        <div class="flex gap-2 w-fit px-4">
           <DashboardGoalItem
             v-for="goal in goalsStore.goals"
             :key="goal.id"
@@ -40,6 +40,22 @@
             class="w-[180px]"
           />
         </div>
+      </div>
+    </div>
+
+    <div class="px-4 pb-[120px]">
+      <div class="flex justify-between items-center text-xl font-bold">
+        <h3 class="sticky top-[90px] bg-white z-2 h-[50px] flex items-center">
+          История
+        </h3>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <DashboardStoryItem
+          v-for="transaction in store.currentMonthTransactions"
+          :key="transaction.id"
+          :transaction="transaction"
+        />
       </div>
     </div>
 
@@ -59,6 +75,7 @@ import { useDashboardStore } from "@/store/useDashboardStore";
 import { useGoalsStore } from "@/store/useGoalsStore";
 import { DataItem } from "@/types/transactions";
 import { ref } from "vue";
+import DashboardStoryItem from "@/components/DashboardStoryItem.vue";
 
 const store = useDashboardStore();
 const modal = useModal();

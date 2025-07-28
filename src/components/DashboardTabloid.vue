@@ -5,7 +5,7 @@
   >
     <div class="flex flex-col items-center">
       <p class="text-xl">{{ title }}</p>
-      <h4 class="text-3xl font-medium">{{ sum }} ₽</h4>
+      <h4 class="text-3xl font-medium">{{ sum }} ₽</h4>
     </div>
 
     <!-- <DashboardChart class="w-[300px]" :data="data" /> -->
