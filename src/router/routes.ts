@@ -4,7 +4,7 @@ import { LINKS } from "@/types/navigationTypes";
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    redirect: LINKS.DASHBOARD,
+    redirect: LINKS.SIGNUP,
   },
   {
     path: LINKS.CATEGORIES,
@@ -25,6 +25,11 @@ const routes: RouteRecordRaw[] = [
     path: LINKS.TRANSACTIONS,
     name: "TransactionsView",
     component: () => import("@/views/TransactionsView.vue"),
+  },
+  {
+    path: LINKS.SIGNUP,
+    name: "SignUpView",
+    component: () => import("@/views/SignUp.vue"),
   },
 ];
 

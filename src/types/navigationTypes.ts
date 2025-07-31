@@ -6,7 +6,7 @@ import TransactionIcon from "@/assets/navigation-icons/Transactions.svg";
 
 export type Link = {
   path: string;
-  icon: string;
+  icon?: string;
 };
 
 export const LINKS = {
@@ -15,6 +15,7 @@ export const LINKS = {
   GOALS: "/goals",
   DASHBOARD: "/dashboard",
   REPORTS: "/reports",
+  SIGNUP: "/signup",
 } as const;
 
 export const links: Ref<Link[]> = ref([
@@ -22,4 +23,5 @@ export const links: Ref<Link[]> = ref([
   { path: LINKS.CATEGORIES, icon: CategoryIcon },
   { path: LINKS.GOALS, icon: GoalIcon },
   { path: LINKS.TRANSACTIONS, icon: TransactionIcon },
+  { path: LINKS.SIGNUP },
 ]);
