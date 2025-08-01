@@ -1,10 +1,10 @@
-import { Payload, UserAuthInfo } from "@/types/authTypes";
+import { Payload, OPERATION_TYPE, UserAuthInfo } from "@/types/authTypes";
 import axios from "axios";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export const useAuth = defineStore("auth", () => {
-  const API_KEY: string = "AIzaSyCwl6j-SZv-Ki-UEmGnrP1g2l8QCpwKIZk";
+  const API_KEY: string = import.meta.env.VITE_FIREBASE_API_KEY;
 
   const userInfo = ref<UserAuthInfo>({
     email: "",
@@ -17,12 +17,18 @@ export const useAuth = defineStore("auth", () => {
   const error = ref<string>("");
   const loading = ref<boolean>(false);
 
-  const signUp = async (payload: Payload) => {
+  const auth = async (payload: Payload, type: string) => {
+    const operationType: string =
+      type === OPERATION_TYPE.SIGNUP
+        ? OPERATION_TYPE.SIGNUP
+        : OPERATION_TYPE.SIGNIN;
+
     error.value = "";
+
     try {
       loading.value = true;
       const response = await axios.post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:${operationType}?key=${API_KEY}`,
         {
           ...payload,
           returnSecureToken: true,
@@ -37,21 +43,38 @@ export const useAuth = defineStore("auth", () => {
         refreshToken: response.data.refreshToken,
       };
     } catch (err: any) {
-      const firebaseMessage = err.response.data.error.message;
+      if (err.response?.data?.error) {
+        const firebaseMessage: string = err.response.data.error.message;
+        console.error("Firebase error:", firebaseMessage); // Логируем для отладки
 
-      switch (firebaseMessage) {
-        case "EMAIL_EXISTS":
-          error.value = "Email exist";
-          break;
-        case "OPERATION_NOT_ALLOWED":
-          error.value = "Operation not allowed";
-          break;
-        case "TOO_MANY_ATTEMPTS_TRY_LATER":
-          error.value = "Too many attemps try later";
-          break;
-        default:
-          error.value = "error";
-          break;
+        switch (firebaseMessage) {
+          case "EMAIL_EXISTS":
+            error.value = "Пользователь с таким email уже существует";
+            break;
+          case "OPERATION_NOT_ALLOWED":
+            error.value = "Регистрация отключена";
+            break;
+          case "EMAIL_NOT_FOUND":
+            error.value = "Email не найден";
+            break;
+          case "INVALID_PASSWORD":
+            error.value = "Неверный пароль";
+            break;
+          case "TOO_MANY_ATTEMPTS_TRY_LATER":
+            error.value = "Слишком много попыток. Попробуйте позже";
+            break;
+          case "INVALID_EMAIL":
+            error.value = "Неверный формат email";
+            break;
+          case "WEAK_PASSWORD":
+            error.value = "Пароль должен быть не менее 6 символов";
+            break;
+          default:
+            error.value = `Ошибка: ${firebaseMessage}`; // Показываем оригинальное сообщение
+            break;
+        }
+      } else {
+        error.value = "Ошибка сети или сервера";
       }
     } finally {
       loading.value = false;
@@ -59,7 +82,7 @@ export const useAuth = defineStore("auth", () => {
   };
 
   return {
-    signUp,
+    auth,
     userInfo,
     error,
     loading,

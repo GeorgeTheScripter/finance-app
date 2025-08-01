@@ -10,3 +10,8 @@ export type Payload = {
   email: string;
   password: string;
 };
+
+export enum OPERATION_TYPE {
+  SIGNIN = "signInWithPassword",
+  SIGNUP = "signUp",
+}

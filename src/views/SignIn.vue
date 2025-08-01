@@ -1,7 +1,7 @@
 <template>
   <div class="px-4">
     <div class="fixed w-full bg-white h-[50px] flex items-center">
-      <h3 class="text-3xl">Регистрация</h3>
+      <h3 class="text-3xl">Вход</h3>
     </div>
 
     <form
@@ -22,9 +22,9 @@
       </div>
       <Button
         v-else
-        @click="signup"
+        @click="signin"
         class="py-4 px-2 bg-green-600 text-white w-full"
-        >Зарегистрироваться</Button
+        >Войти</Button
       >
     </form>
   </div>
@@ -43,7 +43,7 @@ const store = useAuth();
 
 const router = useRouter();
 
-const signup = async () => {
+const signin = async () => {
   store.error = "";
 
   await store.auth(
@@ -51,9 +51,8 @@ const signup = async () => {
       email: email.value,
       password: password.value,
     },
-    OPERATION_TYPE.SIGNUP
+    OPERATION_TYPE.SIGNIN
   );
-
   if (!store.error) {
     email.value = "";
     password.value = "";

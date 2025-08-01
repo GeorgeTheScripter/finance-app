@@ -16,6 +16,7 @@ export const LINKS = {
   DASHBOARD: "/dashboard",
   REPORTS: "/reports",
   SIGNUP: "/signup",
+  SIGNIN: "/signin",
 } as const;
 
 export const links: Ref<Link[]> = ref([
@@ -24,4 +25,5 @@ export const links: Ref<Link[]> = ref([
   { path: LINKS.GOALS, icon: GoalIcon },
   { path: LINKS.TRANSACTIONS, icon: TransactionIcon },
   { path: LINKS.SIGNUP },
+  { path: LINKS.SIGNIN },
 ]);

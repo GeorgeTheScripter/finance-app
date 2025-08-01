@@ -31,6 +31,11 @@ const routes: RouteRecordRaw[] = [
     name: "SignUpView",
     component: () => import("@/views/SignUp.vue"),
   },
+  {
+    path: LINKS.SIGNIN,
+    name: "SignInView",
+    component: () => import("@/views/SignIn.vue"),
+  },
 ];
 
 export default routes;
